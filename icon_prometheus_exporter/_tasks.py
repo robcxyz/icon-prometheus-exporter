@@ -14,6 +14,7 @@ from abc import abstractmethod
 from icon_prometheus_exporter._utils import PeriodicTask, check
 from icon_prometheus_exporter._rpc import iconRPCError, get_block_num
 from prometheus_client.core import GaugeMetricFamily, REGISTRY
+from prometheus_client import Gauge
 
 #
 
@@ -42,33 +43,32 @@ class ExporterPeriodicTask( PeriodicTask ):
 #
 class prepsUpdater( ExporterPeriodicTask ):
     def __init__(self, rpc, request_data):
-        super( prepsUpdater, self ).__init__( rpc, 3 )
+        super( prepsUpdater, self ).__init__( rpc, 1 )
         self.request_data = request_data
+        self._gauge_preps_totalBlocks = Gauge( 'icon_preps_totalBlocks','------the total number of block chain',['p2pEndpoint'] )
+        self._gauge_preps_validatedBlocks = Gauge( 'icon_preps_validatedBlocks','------the total number of validated block chain',['p2pEndpoint'] )
+        self._gauge_preps_blockHeight = Gauge( 'icon_preps_blockHeight','------the hight of block chain',['p2pEndpoint'] )
 
     def _perform_internal(self):
         print( "------------" )
         print( "internal Performer" )
-        self.collect()
-
-    def collect(self):
-        self._gauge_preps_totalBlocks = GaugeMetricFamily( 'icon_preps_totalBlocks',
-                                                           '------the total number of block chain',
-                                                           labels=['name', 'p2pEndpoint'] )
-        self._gauge_preps_validatedBlocks = GaugeMetricFamily( 'icon_preps_validatedBlocks',
-                                                               '------the total number of block chain validatedBlocks',
-                                                               labels=['name', 'p2pEndpoint'] )
-        self._gauge_preps_blockHeight = GaugeMetricFamily( 'icon_preps_blockHeight',
-                                                           '------the total number of block chain blockHeight',
-                                                           labels=['name', 'p2pEndpoint'] )
+        # self._gauge_preps_validatedBlocks = GaugeMetricFamily( 'icon_preps_validatedBlocks',
+        #                                                        '------the total number of block chain validatedBlocks',
+        #                                                        labels=['p2pEndpoint'] )
+        # self._gauge_preps_blockHeight = GaugeMetricFamily( 'icon_preps_blockHeight',
+        #                                                    '------the total number of block chain blockHeight',
+        #                                                    labels=['p2pEndpoint'] )
         self._allpreps = (self._rpc.request( self.request_data )["result"]["preps"])
-        for i in range( len( self._allpreps ) ):
-            self._gauge_preps_totalBlocks.add_metric( [self._allpreps[i]["name"], self._allpreps[i]["p2pEndpoint"]],
-                                                      int( self._allpreps[i]["totalBlocks"], 16 ) )
-            self._gauge_preps_validatedBlocks.add_metric( [self._allpreps[i]["name"], self._allpreps[i]["p2pEndpoint"]],
-                                                          int( self._allpreps[i]["validatedBlocks"], 16 ) )
-            self._gauge_preps_blockHeight.add_metric( [self._allpreps[i]["name"], self._allpreps[i]["p2pEndpoint"]],
-                                                      int( self._allpreps[i]["blockHeight"], 16 ) )
-
-        yield self._gauge_preps_totalBlocks
-        yield self._gauge_preps_blockHeight
-        yield self._gauge_preps_validatedBlocks
+        for i in range( len( self._allpreps )):
+            self._gauge_preps_totalBlocks.labels([self._allpreps[i]["p2pEndpoint"]]).set(int( self._allpreps[i]["totalBlocks"], 16 ))
+            self._gauge_preps_validatedBlocks.labels([self._allpreps[i]["p2pEndpoint"]]).set(int( self._allpreps[i]["validatedBlocks"], 16 ))
+            self._gauge_preps_blockHeight.labels([self._allpreps[i]["p2pEndpoint"]]).set(int( self._allpreps[i]["blockHeight"], 16 ))
+            print (i)
+            if(i==9): return
+            # self._gauge_preps_validatedBlocks.add_metric( [ self._allpreps[i]["p2pEndpoint"]],
+            #                                               int( self._allpreps[i]["validatedBlocks"], 16 ) )
+            # self._gauge_preps_blockHeight.add_metric( [self._allpreps[i]["p2pEndpoint"]],
+            #                                           int( self._allpreps[i]["blockHeight"], 16 ) )
+        # yield self._gauge_preps_totalBlocks
+        # yield self._gauge_preps_blockHeight
+        # yield self._gauge_preps_validatedBlocks
