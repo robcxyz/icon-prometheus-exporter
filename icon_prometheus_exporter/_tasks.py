@@ -47,9 +47,7 @@ class prepsUpdater( ExporterPeriodicTask ):
         self.request_data = request_data
         self._gauge_preps_totalBlocks = Gauge( 'icon_preps_totalBlocks','------the total number of block chain',['p2pEndpoint'] )
         self._gauge_preps_validatedBlocks = Gauge( 'icon_preps_validatedBlocks','------the total number of validated block chain',['p2pEndpoint'] )
-        self._gauge_preps_blockHeight = Gauge( 'icon_preps_blockHeight','------the hight of block chain',['p2pEndpoint'] )
-
-    def _perform_internal(self):
+        self._gauge_preps_blockHeight = Gauge( 'icon_preps_blockHeight','------the hight of block chain',['p2pEndpoint']     def _perform_internal(self):
         print( "------------" )
         print( "internal Performer" )
         # self._gauge_preps_validatedBlocks = GaugeMetricFamily( 'icon_preps_validatedBlocks',
