@@ -47,15 +47,17 @@ class prepsUpdater( ExporterPeriodicTask ):
         self.request_data = request_data
         self._gauge_preps_totalBlocks = Gauge( 'icon_preps_totalBlocks','------the total number of block chain',['p2pEndpoint'] )
         self._gauge_preps_validatedBlocks = Gauge( 'icon_preps_validatedBlocks','------the total number of validated block chain',['p2pEndpoint'] )
-        self._gauge_preps_blockHeight = Gauge( 'icon_preps_blockHeight','------the hight of block chain',['p2pEndpoint']     def _perform_internal(self):
+        self._gauge_preps_blockHeight = Gauge( 'icon_preps_blockHeight','------the hight of block chain',['p2pEndpoint'])
+        iconlist = []
+        blockHeight = {}
+        self._allpreps = (self._rpc.request( self.request_data )["result"]["preps"])
+        print (self._allpreps)
+
+
+    def _perform_internal(self):
         print( "------------" )
         print( "internal Performer" )
-        # self._gauge_preps_validatedBlocks = GaugeMetricFamily( 'icon_preps_validatedBlocks',
-        #                                                        '------the total number of block chain validatedBlocks',
-        #                                                        labels=['p2pEndpoint'] )
-        # self._gauge_preps_blockHeight = GaugeMetricFamily( 'icon_preps_blockHeight',
-        #                                                    '------the total number of block chain blockHeight',
-        #                                                    labels=['p2pEndpoint'] )
+        self.update_Blockhight()
         self._allpreps = (self._rpc.request( self.request_data )["result"]["preps"])
         for i in range( len( self._allpreps )):
             self._gauge_preps_totalBlocks.labels([self._allpreps[i]["p2pEndpoint"]]).set(int( self._allpreps[i]["totalBlocks"], 16 ))
@@ -70,3 +72,7 @@ class prepsUpdater( ExporterPeriodicTask ):
         # yield self._gauge_preps_totalBlocks
         # yield self._gauge_preps_blockHeight
         # yield self._gauge_preps_validatedBlocks
+
+    def update_Blockhight(self):
+        pass
+

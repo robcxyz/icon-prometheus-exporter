@@ -4,6 +4,7 @@
 
 import sys
 import os
+sys.path.append("..")
 from time import sleep, time
 from signal import signal, SIGINT, SIGTERM
 import argparse
@@ -11,7 +12,7 @@ import random
 import time
 # import psutil
 
-
+from icon_prometheus_exporter import _tasks
 from icon_prometheus_exporter._tasks import prepsUpdater
 from prometheus_client import start_http_server, Counter, Gauge, Summary,Info
 

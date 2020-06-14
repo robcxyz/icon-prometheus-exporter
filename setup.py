@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 url = ""
 version = "0.1.0"
@@ -6,7 +6,8 @@ readme = open('README.rst').read()
 
 setup(
     name="icon-prometheus-exporter",
-    packages=["icon-prometheus-exporter"],
+    packages=find_packages(),
+    # packages=["icon-prometheus-exporter"],
     version=version,
     description="exporter agent for icon blockchain",
     long_description=readme,
