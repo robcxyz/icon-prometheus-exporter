@@ -21,7 +21,7 @@ if __name__ == '__main__':
     sys.path.append( os.path.realpath( os.path.dirname( os.path.dirname( __file__ ) ) ) )
 
 from icon_prometheus_exporter._utils import check
-from icon_prometheus_exporter._rpc import iconRPC, iconRPCError, get_block_num
+from icon_prometheus_exporter._rpc import iconRPC, iconRPCError
 # from icon_prometheus_exporter._blockchain import BlockCache
 # from prometheus_client.core import GaugeMetricFamily, REGISTRY, CounterMetricFamily
 
@@ -90,18 +90,6 @@ def main():
     ap.add_argument( "--exporter_address", type=str, help='expose metrics on this address' )
     ap.add_argument( "--rpc_url", type=str, default='https://ctz.solidwallet.io/api/v3',
                      help='icon node rpc address' )
-    # ap.add_argument( "--blackbox_rpc_url", type=str, default='http://35.174.249.15:9000/api/v3',
-    #                  help='icon node black_rpc address' )
-
-    # ap.add_argument("--request_data", type=str, default='{"jsonrpc": "2.0",'
-    #                                                     '"id": 1234,'
-    #                                                     '"method": "icx_call",'
-    #                                                     '"params": {'
-    #                                                     '"to":"cx0000000000000000000000000000000000000000",'
-    #                                                     '"dataType": "call",'
-    #                                                     '"data": {'
-    #                                                     '"method": "getPReps",'
-    #                                                     '"params": {"startRanking": "0x1","endRanking": "0xa"}}}}', help='icon node rpc address')
     args = ap.parse_args()
     request_data = {
             "jsonrpc": "2.0",
@@ -114,7 +102,7 @@ def main():
                     "method": "getPReps",
                     "params": {
                         "startRanking": "0x1",
-                        "endRanking": "0xa"
+                        "endRanking": "0xaaa"
                     }
                 }
             }
