@@ -53,22 +53,22 @@ class iconRPC:
         try:
             result = requests.get('http://'+node_IP+':9000/api/v1/status/peer', timeout=0.2)
             self._counter_rpc_node_reply_status.labels(node_IP,'ok').inc()
-            print(result)
+            # print(result)
         except RequestException:
             # TODO more fine-grained error handling
-            print("exeption", node_IP)
+            # print("exeption", node_IP)
             self._counter_rpc_node_reply_status.labels(node_IP,'Error').inc()
             # self._counter_network_error.inc()
             return None
 
         if result.status_code != 200:
-            print("status error")
+            # print("status error")
             self._counter_rpc_node_reply_status.labels(node_IP,'Error').inc()
             return None
 
         result_json = result.json()
         if result_json.get( 'error' ):
-            print("status error")
+            # print("status error")
             self._counter_rpc_node_reply_status.labels(node_IP,'Error').inc()
             return
         if result is None:

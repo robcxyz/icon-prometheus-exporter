@@ -49,7 +49,7 @@ class prepsUpdater(ExporterPeriodicTask):
         for node in self._allpreps:
             x = str(node["p2pEndpoint"]).replace(":7100","")
             self._iconlist.append(x)
-            print(x)
+            # print(x)
             self._nodeCount += 1
         print(self._nodeCount)
 
@@ -59,7 +59,7 @@ class prepsUpdater(ExporterPeriodicTask):
         # print (self._nodes_reference.items())
 
     def _perform_internal(self):
-        print("------------")
+        # print("------------")
         # print( "internal Performer" )
         self.update_Blockhight()
         self._allpreps = (self._rpc.endpoint_post_request(self.request_data)["result"]["preps"])
