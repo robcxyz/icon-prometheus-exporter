@@ -1,22 +1,7 @@
-# # Copyright (C) 2019  MixBytes, LLC
-# #
-# # Licensed under the Apache License, Version 2.0 (the "License").
-# # You may not use this file except in compliance with the License.
-# #
-# # Unless required by applicable law or agreed to in writing, software
-# # distributed under the License is distributed on an "AS IS" BASIS,
-# # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND (express or implied).
-#
-# from abc import abstractmethod
-#
-
 from abc import abstractmethod
 from icon_prometheus_exporter._utils import PeriodicTask, check
-from prometheus_client.core import GaugeMetricFamily, REGISTRY
 from prometheus_client import Gauge
 
-
-#
 
 class ExporterPeriodicTask(PeriodicTask):
     """
@@ -94,19 +79,8 @@ class prepsUpdater(ExporterPeriodicTask):
             if result != None:
                 self._gauge_node_reference_blockHeight.labels([result["peer_target"]]).set(result["block_height"])
                 self._gauge_node_reference_total_tx.labels([result["peer_target"]]).set(result["total_tx"])
-            # self._gauge_node_reference_peer_count.labels([result["peer_target"]]).set(result["peer_count"])
-        print(c)
-        # print ("all",self._nodes_reference.items())
-            # print (i)
-            # if (i == 9): return
-            # self._gauge_preps_validatedBlocks.add_metric( [ self._allpreps[i]["p2pEndpoint"]],
-            #                                               int( self._allpreps[i]["validatedBlocks"], 16 ) )
-            # self._gauge_preps_blockHeight.add_metric( [self._allpreps[i]["p2pEndpoint"]],
-            #                                           int( self._allpreps[i]["blockHeight"], 16 ) )
-        # yield self._gauge_preps_totalBlocks
-        # yield self._gauge_preps_blockHeight
-        # yield self._gauge_preps_validatedBlocks
-        #
+        # print(c)
+
 
     def update_Blockhight(self):
         pass

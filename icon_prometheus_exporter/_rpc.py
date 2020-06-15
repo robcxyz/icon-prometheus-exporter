@@ -1,15 +1,5 @@
-# Copyright (C) 2019  MixBytes, LLC
-#
-# Licensed under the Apache License, Version 2.0 (the "License").
-# You may not use this file except in compliance with the License.
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND (express or implied).
-
 import json
 
-# import httplib2 as httplib2
 from requests.exceptions import RequestException
 import requests
 from prometheus_client import Counter
@@ -33,9 +23,6 @@ class iconRPC:
         # self._counter_rpc_node_reply = Counter('icon_counter_node_reply','Total number of OK reply',["node_ID"])
         # self._counter_rpc_node_reply_error = Counter('icon_counter_node_reply_error','Total number of error reply',["node_ID"])
         self._counter_rpc_node_reply_status = Counter('icon_counter_node_reply_status','Total number of OK reply',["node_ID","status"])
-
-
-
 
     def request_nothrow(self, request_data):
         self._next_id += 1
