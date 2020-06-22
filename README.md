@@ -1,5 +1,3 @@
-===========================================
-
 ## ICON - exporter agent for icon blockchain:
 ----------------
 
