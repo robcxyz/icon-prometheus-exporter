@@ -22,7 +22,8 @@ class iconRPC:
 
         # self._counter_rpc_node_reply = Counter('icon_counter_node_reply','Total number of OK reply',["node_ID"])
         # self._counter_rpc_node_reply_error = Counter('icon_counter_node_reply_error','Total number of error reply',["node_ID"])
-        self._counter_rpc_node_reply_status = Counter('icon_counter_node_reply_status','Total number of OK reply',["node_ID","status"])
+        self._counter_rpc_node_reply_status = Counter('icon_counter_node_reply_status','Total number of OK reply',["node_ID","name","status"])
+
 
     def request_nothrow(self, request_data):
         self._next_id += 1
@@ -48,28 +49,28 @@ class iconRPC:
             raise iconRPCError()
         return result
 
-    def node_get_request(self, node_IP):
+    def node_get_request(self, node_IP,name):
 
         try:
-            result = requests.get('http://'+node_IP+':9000/api/v1/status/peer', timeout=0.2)
-            self._counter_rpc_node_reply_status.labels(node_IP,'ok').inc()
+            result = requests.get('http://'+node_IP+':9000/api/v1/status/peer', timeout=0.3)
+            self._counter_rpc_node_reply_status.labels(node_IP,name,'ok').inc()
             # print(result)
         except RequestException:
             # TODO more fine-grained error handling
             # print("exeption", node_IP)
-            self._counter_rpc_node_reply_status.labels(node_IP,'Error').inc()
+            self._counter_rpc_node_reply_status.labels(node_IP,name,'Error').inc()
             # self._counter_network_error.inc()
             return None
 
         if result.status_code != 200:
             # print("status error")
-            self._counter_rpc_node_reply_status.labels(node_IP,'Error').inc()
+            self._counter_rpc_node_reply_status.labels(node_IP,name,'Error').inc()
             return None
 
         result_json = result.json()
         if result_json.get( 'error' ):
             # print("status error")
-            self._counter_rpc_node_reply_status.labels(node_IP,'Error').inc()
+            self._counter_rpc_node_reply_status.labels(node_IP,name,'Error').inc()
             return
         if result is None:
             raise iconRPCError()
