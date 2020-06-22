@@ -1,5 +1,5 @@
 ICON - exporter agent for icon blockchain
-=========================
+===========================================
 
 To install the icon-prometheus-exporter package.
 
