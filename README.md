@@ -1,7 +1,7 @@
 ## ICON - exporter agent for icon blockchain:
 ----------------
 
-This is a python agent that extracts metric form ICON-nodes through provided rpcs. just clone and run the python agent on your server. The metrics are exported on port 6100 that need to be configured on prometheus server.
+This is a python agent that discover nodes and extracts metric provided through each node's rpc. Clone and run the python agent on your server and use port 6100 to get your prometheus server to scrap the date from this agent.
 
 To install the icon-prometheus-exporter package.
 
