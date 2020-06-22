@@ -22,4 +22,4 @@ you can use the [prometheus server](https://github.com/ghalwash/terransible-aws-
 ## sample output:
 ----------------
 ## Infrastructure
-![GitHub Logo](https://github.com/ghalwash/icon-prometheus-exporter/blob/master/Screenshot%20from%202020-06-17%2018-26-56.png)
+![GitHub Logo](https://github.com/ghalwash/icon-prometheus-exporter/blob/master/Screenshot.png)
