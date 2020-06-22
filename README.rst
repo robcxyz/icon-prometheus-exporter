@@ -17,7 +17,7 @@ mkdir ~/.virtualenvs
     cd icon-prometheus-exporter
     python setup.py install
 
-you can use the [prometheus server](https://github.com/ghalwash/terransible-aws-ec2-prometheus) to show the extracted data in grafana dashboards
+you can use the [prometheus](https://github.com/ghalwash/terransible-aws-ec2-prometheus) to show the extracted data in grafana dashboards
 
 ## sample output:
 ----------------
